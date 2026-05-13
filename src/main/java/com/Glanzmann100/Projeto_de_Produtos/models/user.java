@@ -1,9 +1,16 @@
-package com.Glanzmann100.Projeto_de_Produtos.entities;
+package com.Glanzmann100.Projeto_de_Produtos.models;
+
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tb_user")
 public class user implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;
@@ -22,9 +29,7 @@ public class user implements Serializable {
     public Long getId() {
         return id;
     }
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setId(Long id) {this.id = id;}
 
     public String getName() {
         return name;
