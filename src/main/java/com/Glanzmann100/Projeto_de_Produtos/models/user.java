@@ -1,11 +1,14 @@
 package com.Glanzmann100.Projeto_de_Produtos.models;
 
 import jakarta.persistence.*;
-
+import lombok.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
+@NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "tb_user")
 public class user implements Serializable {
 
@@ -16,6 +19,7 @@ public class user implements Serializable {
     private String email;
     private String phone;
     private String password;
+
 
     public user(Long id, String name, String email, String phone, String password) {
         super();
