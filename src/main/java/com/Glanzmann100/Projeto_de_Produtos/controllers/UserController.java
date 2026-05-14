@@ -1,7 +1,7 @@
 package com.Glanzmann100.Projeto_de_Produtos.controllers;
 
 import com.Glanzmann100.Projeto_de_Produtos.models.User;
-import com.Glanzmann100.Projeto_de_Produtos.services.userService;
+import com.Glanzmann100.Projeto_de_Produtos.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private userService service;
+    private UserService service;
 
     @GetMapping
     public ResponseEntity<List<User>> findAll() {

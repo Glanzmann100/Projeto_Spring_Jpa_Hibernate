@@ -4,13 +4,12 @@ import com.Glanzmann100.Projeto_de_Produtos.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_order")
-public class Order implements Serializable {
+public class Order{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

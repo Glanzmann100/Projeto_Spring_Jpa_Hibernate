@@ -3,7 +3,6 @@ package com.Glanzmann100.Projeto_de_Produtos.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +10,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_user")
-public class User implements Serializable {
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

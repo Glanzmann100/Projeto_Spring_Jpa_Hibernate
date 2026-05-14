@@ -1,7 +1,7 @@
 package com.Glanzmann100.Projeto_de_Produtos.controllers;
 
 import com.Glanzmann100.Projeto_de_Produtos.models.Order;
-import com.Glanzmann100.Projeto_de_Produtos.services.orderService;
+import com.Glanzmann100.Projeto_de_Produtos.services.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import java.util.List;
 public class OrderController {
 
     @Autowired
-    private orderService service;
+    private OrderService service;
 
     @GetMapping
     public ResponseEntity<List<Order>> findAll() {
