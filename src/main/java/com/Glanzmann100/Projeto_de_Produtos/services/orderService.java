@@ -1,7 +1,7 @@
 package com.Glanzmann100.Projeto_de_Produtos.services;
 
-import com.Glanzmann100.Projeto_de_Produtos.models.order;
-import com.Glanzmann100.Projeto_de_Produtos.repositories.orderRepository;
+import com.Glanzmann100.Projeto_de_Produtos.models.Order;
+import com.Glanzmann100.Projeto_de_Produtos.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -14,13 +14,13 @@ import java.util.Optional;
 public class orderService {
 
     @Autowired
-    private orderRepository repository;
+    private OrderRepository repository;
 
-    public List<order> findAll() {
+    public List<Order> findAll() {
         return repository.findAll();
     }
-    public order findById(Long id) {
-        Optional<order> obj = repository.findById(id);
+    public Order findById(Long id) {
+        Optional<Order> obj = repository.findById(id);
         return obj.get();
     }
 }

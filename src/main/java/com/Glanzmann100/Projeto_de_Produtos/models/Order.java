@@ -1,17 +1,16 @@
 package com.Glanzmann100.Projeto_de_Produtos.models;
 
+import com.Glanzmann100.Projeto_de_Produtos.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_order")
-public class order implements Serializable {
+public class Order implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,16 +19,19 @@ public class order implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
 
+    private Integer orderStatusCode;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
-    private user client;
+    private User client;
 
-    public order() {
+    public Order() {
     }
 
-    public order(Long id, Instant moment, user client) {
+    public Order(Long id, Instant moment, OrderStatus orderStatus , User client) {
         super();
         this.id = id;
+        this.orderStatusCode = (orderStatus != null) ? orderStatus.getCode() : null;
         this.moment = moment;
         this.client = client;
     }
@@ -50,11 +52,20 @@ public class order implements Serializable {
         this.moment = moment;
     }
 
-    public user getClient() {
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOf(this.orderStatusCode);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        if (orderStatus != null)
+            this.orderStatusCode = orderStatus.getCode();
+    }
+
+    public User getClient() {
         return client;
     }
 
-    public void setClient(user client) {
+    public void setClient(User client) {
         this.client = client;
     }
 
@@ -62,7 +73,7 @@ public class order implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        order order = (order) o;
+        Order order = (Order) o;
         return Objects.equals(id, order.id) && Objects.equals(moment, order.moment) && Objects.equals(client, order.client);
     }
 

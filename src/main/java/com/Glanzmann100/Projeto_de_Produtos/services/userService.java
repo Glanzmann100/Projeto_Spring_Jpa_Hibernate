@@ -1,7 +1,7 @@
 package com.Glanzmann100.Projeto_de_Produtos.services;
 
-import com.Glanzmann100.Projeto_de_Produtos.models.user;
-import com.Glanzmann100.Projeto_de_Produtos.repositories.userRepository;
+import com.Glanzmann100.Projeto_de_Produtos.models.User;
+import com.Glanzmann100.Projeto_de_Produtos.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -14,13 +14,14 @@ import java.util.Optional;
 public class userService {
 
     @Autowired
-    private userRepository repository;
+    private UserRepository repository;
 
-    public List<user> findAll() {
+    public List<User> findAll() {
         return repository.findAll();
     }
-    public user findById(Long id) {
-        Optional<user> obj = repository.findById(id);
+
+    public User findById(Long id) {
+        Optional<User> obj = repository.findById(id);
         return obj.get();
     }
 }
