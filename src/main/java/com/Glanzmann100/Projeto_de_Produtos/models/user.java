@@ -1,5 +1,7 @@
 package com.Glanzmann100.Projeto_de_Produtos.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
@@ -10,7 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_user")
-public class User implements Serializable {
+public class user implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +23,11 @@ public class User implements Serializable {
     private String password;
 
     @OneToMany(mappedBy = "client")
-    private List<Order> orders = new ArrayList<>();
+    @JsonIgnore
+    private List<order> orders = new ArrayList<>();
 
 
-    public User(Long id, String name, String email, String phone, String password) {
+    public user(Long id, String name, String email, String phone, String password) {
         super();
         this.id = id;
         this.name = name;
@@ -66,10 +69,13 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public List<order> getOrders() {
+        return orders;
+    }
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
+        user user = (user) o;
         return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(phone, user.phone) && Objects.equals(password, user.password);
     }
 
