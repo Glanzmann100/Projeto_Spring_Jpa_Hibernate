@@ -3,14 +3,14 @@ package com.Glanzmann100.Projeto_de_Produtos.models;
 import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-@Data
 @NoArgsConstructor
 @Entity
-@Builder
 @Table(name = "tb_user")
-public class user implements Serializable {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +20,11 @@ public class user implements Serializable {
     private String phone;
     private String password;
 
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders = new ArrayList<>();
 
-    public user(Long id, String name, String email, String phone, String password) {
+
+    public User(Long id, String name, String email, String phone, String password) {
         super();
         this.id = id;
         this.name = name;
@@ -66,7 +69,7 @@ public class user implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        user user = (user) o;
+        User user = (User) o;
         return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(phone, user.phone) && Objects.equals(password, user.password);
     }
 

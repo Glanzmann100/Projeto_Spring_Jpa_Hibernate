@@ -1,6 +1,6 @@
 package com.Glanzmann100.Projeto_de_Produtos.controllers;
 
-import com.Glanzmann100.Projeto_de_Produtos.models.user;
+import com.Glanzmann100.Projeto_de_Produtos.models.User;
 import com.Glanzmann100.Projeto_de_Produtos.services.userService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,13 @@ public class userController {
     private userService service;
 
     @GetMapping
-    public ResponseEntity<List<user>> findAll() {
-        List<user> list = service.findAll();
+    public ResponseEntity<List<User>> findAll() {
+        List<User> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
     @GetMapping(value = "/{id}")
-    public  ResponseEntity<user> findById(@PathVariable Long id) {
-        user obj = service.findById(id);
+    public  ResponseEntity<User> findById(@PathVariable Long id) {
+        User obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
 
     }
