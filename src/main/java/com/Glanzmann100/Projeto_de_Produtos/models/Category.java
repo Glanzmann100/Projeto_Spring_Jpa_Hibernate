@@ -1,7 +1,11 @@
 package com.Glanzmann100.Projeto_de_Produtos.models;
 
 import jakarta.persistence.*;
+import jakarta.transaction.TransactionScoped;
+
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_category")
@@ -11,6 +15,9 @@ public class Category{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Transient
+    private Set<Product> products = new HashSet<>();
 
     public Category(Long id, String name) {
         super();
@@ -26,6 +33,8 @@ public class Category{
 
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
+
+    public Set<Product> getProducts() {return products;}
 
     @Override
     public boolean equals(Object o) {
