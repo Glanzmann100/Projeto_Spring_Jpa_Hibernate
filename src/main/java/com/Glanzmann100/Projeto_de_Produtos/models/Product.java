@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table (name = "tb_products")
+@Table(name = "tb_products")
 public class Product {
 
     @Id
@@ -23,8 +23,10 @@ public class Product {
     @JoinTable(name = "tb_products_category", joinColumns = @JoinColumn(name = "products_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>();
 
-    public Product (Long id, String name, String description, Double price, String imgUrl) {
+    public Product(Long id, String name, String description, Double price, String imgUrl) {
         super();
         this.id = id;
         this.name = name;
@@ -32,7 +34,9 @@ public class Product {
         this.price = price;
         this.imgUrl = imgUrl;
     }
-    private Product () {}
+
+    private Product() {
+    }
 
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
@@ -44,12 +48,19 @@ public class Product {
     public void setDescription(String description) {this.description = description;}
 
     public Double getPrice() {return price;}
+
     public void setPrice(Double price) {this.price = price;}
-
     public String getImgUrl() {return imgUrl;}
-    public void setImgUrl(String imgUrl) {this.imgUrl = imgUrl;}
 
+    public void setImgUrl(String imgUrl) {this.imgUrl = imgUrl;}
     public Set<Category> getCategories() {return categories;}
+
+    @JsonIgnore
+    public Set<Order> getOrders() { // Percorre a coleção items, pega o Order associado a cada OrderItem através do getOrder(), e adiciona esse Order no conjunto set.
+        Set<Order> set = new HashSet<>();
+        for (OrderItem x : items) set.add(x.getOrder());
+        return set;
+    }
 
     @Override
     public boolean equals(Object o) {
