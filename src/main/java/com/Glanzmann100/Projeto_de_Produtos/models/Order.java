@@ -29,8 +29,10 @@ public class Order{
     @OneToMany(mappedBy = "id.order") // Relacionamento que referencia o id order da classe OrderItem
     private Set<OrderItem> items = new HashSet<>(); // cria a lista de items atrelados ao Order
 
-    public Order() {
-    }
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL) // tanto o Order quanto o Payment devem te ro mesmo ID
+    private Payment payment;
+
+    public Order() {}
 
     public Order(Long id, Instant moment, OrderStatus orderStatus , User client) {
         super();
@@ -38,6 +40,7 @@ public class Order{
         this.orderStatusCode = (orderStatus != null) ? orderStatus.getCode() : null;
         this.moment = moment;
         this.client = client;
+        this.payment = payment;
     }
 
     public Long getId() {
@@ -72,6 +75,10 @@ public class Order{
     public void setClient(User client) {
         this.client = client;
     }
+
+    public Payment getPayment() {return payment;}
+
+    public void setPayment(Payment payment) {this.payment = payment;}
 
     public Set<OrderItem> getItems() {
         return items;
