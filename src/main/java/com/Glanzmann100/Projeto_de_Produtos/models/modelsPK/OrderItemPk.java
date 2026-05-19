@@ -12,11 +12,11 @@ import java.util.Objects;
 public class OrderItemPk {
 
     @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id") // chave composta que referencia o id do Order
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id") // chave composta que referencia o id do Product
     private Product product;
 
     public Order getOrder() {

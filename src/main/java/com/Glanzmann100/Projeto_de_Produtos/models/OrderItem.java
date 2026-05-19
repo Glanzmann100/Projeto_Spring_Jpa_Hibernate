@@ -1,6 +1,7 @@
 package com.Glanzmann100.Projeto_de_Produtos.models;
 
 import com.Glanzmann100.Projeto_de_Produtos.models.modelsPK.OrderItemPk;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -13,7 +14,7 @@ import java.util.Objects;
 public class OrderItem {
 
     @EmbeddedId
-    private OrderItemPk id;
+    private OrderItemPk id = new OrderItemPk(); // Referencia a chave composta (OrderItemPK)
     private Integer quantity;
     private Double price;
 
@@ -21,25 +22,18 @@ public class OrderItem {
 
     public OrderItem(Order order, Product product, Integer quantity, Double price) {
         super();
-        id.setOrder(order);
-        id.setProduct(product);
+        id.setOrder(order); // Chave composta do id Order
+        id.setProduct(product); // Chave composta do id Product
         this.quantity = quantity;
         this.price = price;
     }
 
-    public Order getOrder() {
-        return id.getOrder();
-    }
-    public void setOrder(Order order) {
-        id.setOrder(order);
-    }
+    @JsonIgnore
+    public Order getOrder() {return id.getOrder();}
+    public void setOrder(Order order) {id.setOrder(order);}
 
-    public Product getProduct() {
-        return id.getProduct();
-    }
-    public void setProduct(Product product) {
-        id.setProduct(product);
-    }
+    public Product getProduct() {return id.getProduct();}
+    public void setProduct(Product product) {id.setProduct(product);}
 
     public Integer getQuantity() {return quantity;}
     public void setQuantity(Integer quantity) {this.quantity = quantity;}

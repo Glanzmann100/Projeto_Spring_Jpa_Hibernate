@@ -1,14 +1,8 @@
 package com.Glanzmann100.Projeto_de_Produtos.config;
 
 import com.Glanzmann100.Projeto_de_Produtos.enums.OrderStatus;
-import com.Glanzmann100.Projeto_de_Produtos.models.Category;
-import com.Glanzmann100.Projeto_de_Produtos.models.Order;
-import com.Glanzmann100.Projeto_de_Produtos.models.Product;
-import com.Glanzmann100.Projeto_de_Produtos.models.User;
-import com.Glanzmann100.Projeto_de_Produtos.repositories.CategoryRepository;
-import com.Glanzmann100.Projeto_de_Produtos.repositories.OrderRepository;
-import com.Glanzmann100.Projeto_de_Produtos.repositories.ProductRepository;
-import com.Glanzmann100.Projeto_de_Produtos.repositories.UserRepository;
+import com.Glanzmann100.Projeto_de_Produtos.models.*;
+import com.Glanzmann100.Projeto_de_Produtos.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +26,9 @@ public class testConfig implements CommandLineRunner {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -63,5 +60,11 @@ public class testConfig implements CommandLineRunner {
         p4.getCategories().add(cat3);
         p5.getCategories().add(cat2);
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+        orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
     }
 }
