@@ -2,6 +2,8 @@ package com.Glanzmann100.Projeto_de_Produtos.models;
 
 import com.Glanzmann100.Projeto_de_Produtos.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -9,6 +11,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@JsonPropertyOrder({"id", "moment", "orderStatus", "total", "payment", "client", "items"})
 @Entity
 @Table(name = "tb_order")
 public class Order{
@@ -76,12 +79,21 @@ public class Order{
         this.client = client;
     }
 
+    @JsonIgnore
     public Payment getPayment() {return payment;}
 
     public void setPayment(Payment payment) {this.payment = payment;}
 
     public Set<OrderItem> getItems() {
         return items;
+    }
+
+    public Double getTotal() { // Comando para o valor total de todos os itens de cada pedido
+        double sum = 0.0;
+        for (OrderItem x : items) {
+            sum += + x.getSubTotal();
+        }
+        return sum;
     }
     @Override
     public boolean equals(Object o) {

@@ -2,13 +2,14 @@ package com.Glanzmann100.Projeto_de_Produtos.models;
 
 import com.Glanzmann100.Projeto_de_Produtos.models.modelsPK.OrderItemPk;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 import java.util.Objects;
 
-
+@JsonPropertyOrder({"quantity", "price", "subTotal", "product"})
 @Entity
 @Table(name = "tb_order_item")
 public class OrderItem {
@@ -40,6 +41,9 @@ public class OrderItem {
 
     public Double getPrice() {return price;}
     public void setPrice(Double price) {this.price = price;}
+
+    public Double getSubTotal() {return price * quantity;}
+
 
     @Override
     public boolean equals(Object o) {
