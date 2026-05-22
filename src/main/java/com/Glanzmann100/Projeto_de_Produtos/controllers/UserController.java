@@ -32,11 +32,16 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> insert(@RequestBody User obj) {
         obj = service.insert(obj);
-        URI uri = ServletUriComponentsBuilder
+        URI uri = ServletUriComponentsBuilder       //Monta o link de onde o novo usuário pode ser encontrado depois de criado
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(obj.getId())
                 .toUri();
         return ResponseEntity.created(uri).body(obj);
+    }
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
