@@ -1,5 +1,6 @@
 package com.Glanzmann100.Projeto_de_Produtos.services;
 
+import com.Glanzmann100.Projeto_de_Produtos.exceptions.ResourceNotFoundException;
 import com.Glanzmann100.Projeto_de_Produtos.models.User;
 import com.Glanzmann100.Projeto_de_Produtos.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class UserService {
     }
 
     public User findById(Long id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Usuário não encontrado");
+        }
         Optional<User> obj = repository.findById(id);
         return obj.get();
     }
@@ -28,7 +32,23 @@ public class UserService {
     public User insert(User obj) {
         return repository.save(obj);
     }
+
     public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Usuário não encontrado");
+        }
         repository.deleteById(id);
+    }
+
+    public User update(Long id, User obj) {
+        User entity = repository.getReferenceById(id); // pega o id salvo pelo RequestBody
+        updateData(entity, obj); // copia os novos dados pro entity
+        return repository.save(entity); // salva e retorna o entity atualizado
+    }
+
+    private void updateData(User entity, User obj) { // metodo que pega os dados antigos(entity) e os dados novos (obj)
+        entity.setName(obj.getName()); // nome antigo pelo novo
+        entity.setEmail(obj.getEmail()); // email antigo pelo novo
+        entity.setPhone(obj.getPhone()); // phone antigo pelo novo
     }
 }
