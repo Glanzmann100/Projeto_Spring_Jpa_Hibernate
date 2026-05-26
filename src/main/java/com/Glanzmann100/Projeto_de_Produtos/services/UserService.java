@@ -2,8 +2,10 @@ package com.Glanzmann100.Projeto_de_Produtos.services;
 
 import com.Glanzmann100.Projeto_de_Produtos.models.User;
 import com.Glanzmann100.Projeto_de_Produtos.repositories.UserRepository;
+import com.Glanzmann100.Projeto_de_Produtos.services.exceptions.DatabaseException;
 import com.Glanzmann100.Projeto_de_Produtos.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -25,21 +27,24 @@ public class UserService {
         Optional<User> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
-
     public User insert(User obj) {
         return repository.save(obj);
     }
-
     public void delete(Long id) {
-        repository.deleteById(id);
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException(id);
+        }
+        try {
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e) { // para deletar dados ligados ao banco de dados, nesse caso clientes com pedidos
+            throw new DatabaseException(e.getMessage()); // chamo a mensagem do DatabaseException
+        }
     }
-
     public User update(Long id, User obj) {
         User entity = repository.getReferenceById(id); // pega o id salvo pelo RequestBody
         updateData(entity, obj); // copia os novos dados pro entity
         return repository.save(entity); // salva e retorna o entity atualizado
     }
-
     private void updateData(User entity, User obj) { // metodo que pega os dados antigos(entity) e os dados novos (obj)
         entity.setName(obj.getName()); // nome antigo pelo novo
         entity.setEmail(obj.getEmail()); // email antigo pelo novo
