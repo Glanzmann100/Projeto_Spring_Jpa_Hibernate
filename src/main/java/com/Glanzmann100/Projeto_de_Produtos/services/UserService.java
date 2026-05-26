@@ -1,8 +1,8 @@
 package com.Glanzmann100.Projeto_de_Produtos.services;
 
-import com.Glanzmann100.Projeto_de_Produtos.exceptions.ResourceNotFoundException;
 import com.Glanzmann100.Projeto_de_Produtos.models.User;
 import com.Glanzmann100.Projeto_de_Produtos.repositories.UserRepository;
+import com.Glanzmann100.Projeto_de_Produtos.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -22,11 +22,8 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        if (!repository.existsById(id)) {
-            throw new ResourceNotFoundException("Usuário não encontrado");
-        }
         Optional<User> obj = repository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insert(User obj) {
@@ -34,9 +31,6 @@ public class UserService {
     }
 
     public void delete(Long id) {
-        if (!repository.existsById(id)) {
-            throw new ResourceNotFoundException("Usuário não encontrado");
-        }
         repository.deleteById(id);
     }
 
