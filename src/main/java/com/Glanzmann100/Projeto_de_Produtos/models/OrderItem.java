@@ -6,55 +6,50 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-
-import java.util.Objects;
+import lombok.*;
 
 @JsonPropertyOrder({"quantity", "price", "subTotal", "product"})
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "tb_order_item")
 public class OrderItem {
 
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     @EmbeddedId
     private OrderItemPk id = new OrderItemPk(); // Referencia a chave composta (OrderItemPK)
+
     private Integer quantity;
+
     private Double price;
 
-    public OrderItem() {}
-
-    public OrderItem(Order order, Product product, Integer quantity, Double price) {
-        super();
-        id.setOrder(order); // Chave composta do id Order
-        id.setProduct(product); // Chave composta do id Product
-        this.quantity = quantity;
-        this.price = price;
+    @JsonIgnore
+    public OrderItemPk getId() {
+        return id;
     }
 
     @JsonIgnore
-    public Order getOrder() {return id.getOrder();}
-    public void setOrder(Order order) {id.setOrder(order);}
-
-    public Product getProduct() {return id.getProduct();}
-    public void setProduct(Product product) {id.setProduct(product);}
-
-    public Integer getQuantity() {return quantity;}
-    public void setQuantity(Integer quantity) {this.quantity = quantity;}
-
-    public Double getPrice() {return price;}
-    public void setPrice(Double price) {this.price = price;}
-
-    public Double getSubTotal() {return price * quantity;}
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderItem orderItem = (OrderItem) o;
-        return Objects.equals(id, orderItem.id);
+    public Order getOrder() {
+        return id.getOrder(); // chave composta id Order
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
+    public void setOrder(Order order) {
+        id.setOrder(order);
+    }
+
+    public Product getProduct() {
+        return id.getProduct(); // chave composta id Product
+    }
+
+    public void setProduct(Product product) {
+        id.setProduct(product);
+    }
+
+    public Double getSubTotal() {
+        return price * quantity;
     }
 }
-
