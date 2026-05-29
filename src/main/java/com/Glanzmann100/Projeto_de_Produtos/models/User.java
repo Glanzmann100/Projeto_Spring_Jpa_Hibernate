@@ -3,8 +3,12 @@ package com.Glanzmann100.Projeto_de_Produtos.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -16,7 +20,7 @@ import java.util.List;
 @EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "tb_user")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,4 +37,34 @@ public class User {
     @OneToMany(mappedBy = "client")
     @JsonIgnore
     private List<Order> orders = new ArrayList<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() { // define as permissões do usuario
+        return List.of();
+    }
+
+    @Override
+    public String getUsername() { // metodo que o spring usa para identificar o usuário, retorna email pois é o que eu defini para fazer o login
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() { // verifica se a conta expirou
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() { // verifica se a conta esta bloqueada
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() { // verifica se a conta expirou
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() { // verifica se a conta esta ativa
+        return true;
+    }
 }
