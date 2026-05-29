@@ -1,6 +1,6 @@
 package com.Glanzmann100.Projeto_de_Produtos.models;
 
-import com.Glanzmann100.Projeto_de_Produtos.enums.OrderStatus;
+import com.Glanzmann100.Projeto_de_Produtos.status.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

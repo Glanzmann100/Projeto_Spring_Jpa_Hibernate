@@ -1,0 +1,15 @@
+package com.Glanzmann100.Projeto_de_Produtos.roles;
+
+public enum UserRoles {
+
+    ADMIN("Admin"),
+    USER("User");
+
+    private String role;
+
+    UserRoles(String role) {
+        this.role = role;
+    }
+
+    public String getRole() {return role;}
+}

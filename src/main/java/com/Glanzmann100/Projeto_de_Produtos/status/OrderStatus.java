@@ -1,4 +1,4 @@
-package com.Glanzmann100.Projeto_de_Produtos.enums;
+package com.Glanzmann100.Projeto_de_Produtos.status;
 
 public enum OrderStatus {
 
