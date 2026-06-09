@@ -3,6 +3,7 @@ package com.Glanzmann100.Projeto_de_Produtos.controllers;
 import com.Glanzmann100.Projeto_de_Produtos.models.User;
 import com.Glanzmann100.Projeto_de_Produtos.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class UserController {
         List<User> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/id/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
         User user = service.findById(id);
         return ResponseEntity.ok().body(user);
@@ -48,5 +49,15 @@ public class UserController {
     public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj) { //Cria um novo obj usando o molde da classe User e captura o id
         obj = service.update(id, obj);
         return ResponseEntity.ok().body(obj);
+    }
+    @GetMapping(value = "/name/{name}")
+    public ResponseEntity<User> findByName(@PathVariable String name) {
+        User user = service.findByName(name);
+        return ResponseEntity.ok().body(user);
+    }
+    @GetMapping(value = "/count")
+    public ResponseEntity<Integer> userCount() {
+        int count = service.userCount();
+        return ResponseEntity.ok().body(count);
     }
 }

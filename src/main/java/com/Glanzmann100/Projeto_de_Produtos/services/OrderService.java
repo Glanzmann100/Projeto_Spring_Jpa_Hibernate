@@ -21,7 +21,13 @@ public class OrderService {
     }
 
     public Order findById(Long id) {
-        Optional<Order> obj = repository.findById(id);
-        return obj.get();
+        Optional<Order> order = repository.findById(id);
+        return order.get();
+    }
+    public List<Order> findByClientName(String name) {
+        return repository.findByClientName(name);
+    }
+    public Order insert(Order order) {
+        return repository.save(order);
     }
 }

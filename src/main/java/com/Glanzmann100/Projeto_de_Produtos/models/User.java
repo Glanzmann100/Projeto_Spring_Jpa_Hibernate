@@ -2,6 +2,7 @@ package com.Glanzmann100.Projeto_de_Produtos.models;
 
 import com.Glanzmann100.Projeto_de_Produtos.roles.UserRoles;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-
+@JsonPropertyOrder({"id", "name", "email", "password","phone","enabled","authorities"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -41,6 +42,7 @@ public class User implements UserDetails {
         this.role = role;
     }
 
+    @JsonIgnore
     @Enumerated(EnumType.STRING)
     private UserRoles role;
 
@@ -54,21 +56,25 @@ public class User implements UserDetails {
         else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
+    @JsonIgnore
     @Override
     public String getUsername() { // metodo que o spring usa para identificar o usuário, retorna email pois é o que eu defini para fazer o login
         return email;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() { // verifica se a conta expirou
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() { // verifica se a conta esta bloqueada
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() { // verifica se a conta expirou
         return true;

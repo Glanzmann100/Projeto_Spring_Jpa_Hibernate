@@ -24,4 +24,7 @@ public class ProductService {
         Optional<Product> product = repository.findById(id);
         return product.get();
     }
+    public Product insert(Product product) {
+        return repository.save(product);
+    }
 }

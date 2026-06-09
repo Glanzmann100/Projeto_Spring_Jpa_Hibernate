@@ -56,4 +56,11 @@ public class UserService {
         entity.setEmail(obj.getEmail()); // email antigo pelo novo
         entity.setPhone(obj.getPhone()); // phone antigo pelo novo
     }
+    public User findByName(String name) {
+        Optional<User> user = repository.findByName(name);
+        return user.orElseThrow(() -> new ResourceNotFoundException(name));
+    }
+    public int userCount() {
+        return findAll().size();
+    }
 }

@@ -1,6 +1,5 @@
 package com.Glanzmann100.Projeto_de_Produtos.services;
 
-import com.Glanzmann100.Projeto_de_Produtos.models.User;
 import com.Glanzmann100.Projeto_de_Produtos.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
